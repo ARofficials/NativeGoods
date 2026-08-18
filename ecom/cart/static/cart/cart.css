@@ -1,0 +1,328 @@
+/* Modern CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f7fa;
+}
+
+/* Navbar Styles */
+.navbar {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: white;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+z-index: 1000;
+padding: 1rem 2rem;
+display: flex;
+align-items: center;
+}
+
+.nav-left {
+position: absolute;
+top: 10px;
+left: 10px;
+display: flex;
+align-items: center;
+gap: 1rem;
+}
+
+.nav-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+}
+
+
+
+.logo h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.location-btn, .cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #4b5563;
+  transition: color 0.2s ease;
+}
+
+.location-btn:hover, .cart-btn:hover {
+  color: #111827;
+}
+
+.location-text {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Logo Styles */
+
+
+/* Continue Shopping Button */
+.continue-shopping {
+position: absolute;
+top: 10px;
+right: 10px;
+margin-right: 10px;
+  color: black;
+  text-decoration: none;
+  padding: 0.7rem 1.3rem;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.continue-shopping:hover {
+background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+  transform: translateY(-2px);
+}
+.cart-header {
+text-align: center;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 1rem;
+font-size: 2rem;
+font-weight: bold;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+margin-top: 80px; /* Push below navbar */
+}
+
+/* Cart Container */
+.cart-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  margin-top: 110px;
+  padding: 0 3rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+/* Cart Items */
+.cart-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1.0rem;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: auto 2fr auto auto;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cart-image {
+  width: 100px;
+  height: 100px;
+  object-fit:contain;
+  border-radius: 15px;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item-info p strong {
+  font-size: 1.1rem;
+  color: #2d3748;
+}
+
+.item-info p:last-child {
+  color: #4a5568;
+  font-weight: 600;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity-controls button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #c6d1dc;
+  color: #000000;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quantity-controls button:hover {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+.quantity-controls span {
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Action Buttons */
+.remove-btn, .save-btn, .restore-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.remove-btn {
+  background: #e43535;
+  color: #ffffff;
+}
+
+.remove-btn:hover {
+  background: #feb2b2;
+  transform: translateY(-2px);
+}
+
+.save-btn, .restore-btn {
+  background: #56c1ff;
+  color: #ffffff;
+}
+
+.save-btn:hover, .restore-btn:hover {
+  background: #90cdf4;
+  transform: translateY(-2px);
+}
+
+/* Cart Summary */
+.cart-summary {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  position: sticky;
+  top: 1rem;
+  height: fit-content;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.cart-summary h2 {
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.cart-summary p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
+
+.cart-summary span {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.checkout-btn, .clear-cart {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.checkout-btn {
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+  color: black;
+}
+
+.checkout-btn:hover {
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+  transform: translateY(-2px);
+}
+
+.clear-cart {
+  background: #c9cbcd;
+  color: #4a5568;
+}
+
+.clear-cart:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+}
+
+/* Saved Items Section */
+.saved-container {
+  grid-column: 1 / 1;
+  margin-top: 0.5rem;
+}
+
+.saved-container h2 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+/* Empty State Messages */
+#cart-items p, #saved-items p {
+  text-align: center;
+  color: #718096;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .cart-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .cart-image {
+    margin: 0 auto;
+  }
+
+  .quantity-controls {
+    justify-content: center;
+  }
+
+  .cart-summary {
+    position: static;
+    margin-top: 0.5rem;
+  }
+}

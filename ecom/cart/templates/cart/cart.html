@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    {% load static %}
+    {% load custom_filters %}
+    <link rel="stylesheet" href="{% static 'cart/cart.css' %}">
+    <script src="https://unpkg.com/lucide@0.485.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+    {% csrf_token %}
+    <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-left">
+            <div class="logo">
+                <a href="{% url 'home' %}" style="text-decoration: none; color: inherit;">
+                    <h1 style="font-size: 1.7rem;">NATIVE GOODS</h1>
+                  </a>
+            </div>
+            <div class="nav-icons">
+                <button class="location-btn" id="location-btn">
+                    <i data-lucide="map-pin"></i>
+                    <span class="location-text" id="location-text">Click to get location</span>
+                </button>
+            </div>
+          </div>
+          <a href="{% url 'home' %}" class="continue-shopping">Continue Shopping</a>
+        </div>
+      </nav>
+      <div class="cart-header">
+        <h1>Your Cart </h1>
+    </div>
+
+    <div class="cart-container">
+        <div id="cart-items">
+            {% for product_id, item in cart.items %}
+            <div class="cart-item" data-product-id="{{ product_id }}">
+                <img src="{{ item.image }}" alt="{{ item.name }}" class="cart-image">
+                <h3>{{ item.name }}</h3>
+                <p>Price: ₹{{ item.price }}</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('{{ product_id }}', 'decrease')">-</button>
+                    <span class="quantity">{{ item.quantity }}</span>
+                    <button onclick="updateCart('{{ product_id }}', 'increase')">+</button>
+                </div>
+                <p class="product-total" data-product-id="{{ product_id }}">Total: ₹{{ item.price|mul:item.quantity }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-summary">
+            <h2>Cart Summary</h2>
+            <p>Total Items: <span id="total-items">{{ total_items }}</span></p>
+            <p>Total Amount: ₹<span id="total-price">{{ total_price }}</span></p>
+            <button class="clear-cart" onclick="clearCart()">Clear Cart</button>
+            <!-- Initially hide the checkout button if the cart is empty -->
+            <button class="checkout-btn" id="checkout-btn" onclick="window.location.href='{% url 'userdetails' %}'" 
+                    style="display: {% if total_items > 0 %}block{% else %}none{% endif %};">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script src="{% static 'cart/cart.js' %}"></script>
+    <script>
+        // Function to show or hide the checkout button based on cart items
+        function toggleCheckoutButton() {
+            const cartItemsElement = document.getElementById('cart-items');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            if (cartItemsElement.children.length === 0) {
+                // If the cart is empty, hide the checkout button
+                if (checkoutBtn) checkoutBtn.style.display = 'none';
+            } else {
+                // If the cart has items, show the checkout button
+                if (checkoutBtn) checkoutBtn.style.display = 'block';
+            }
+        }
+
+        // Call this function when the page loads
+        toggleCheckoutButton();
+
+        function updateCart(productId, action) {
+            fetch('/update-cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                },
+                body: JSON.stringify({ product_id: productId, action: action })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Update the quantity for the specific product
+                    const quantityElement = document.querySelector(`.cart-item[data-product-id="${productId}"] .quantity`);
+                    if (quantityElement) {
+                        quantityElement.textContent = data.cart[productId]?.quantity || 0;
+                    }
+                    // Update the product total price
+                    const productTotalElement = document.querySelector(`.product-total[data-product-id="${productId}"]`);
+                    if (productTotalElement && data.cart[productId]) {
+                        const price = data.cart[productId].price;
+                        const quantity = data.cart[productId].quantity;
+                        productTotalElement.textContent = `Total: ₹${(price * quantity).toFixed(2)}`;
+                    }
+                    // Update the total items and total amount
+                    document.getElementById('total-items').textContent = data.total_items;
+                    document.getElementById('total-price').textContent = data.total_price.toFixed(2);
+        
+                    // If the product is removed, remove its element from the DOM
+                    if (!data.cart[productId]) {
+                        const cartItemElement = document.querySelector(`.cart-item[data-product-id="${productId}"]`);
+                        if (cartItemElement) {
+                            cartItemElement.remove();
+                        }
+                    }
+        
+                    // Toggle the checkout button based on cart items
+                    toggleCheckoutButton();
+                }
+                else if (data.status === 'out_of_stock') {
+                    alert('This product is out of stock!');
+                    // You might want to update the UI to reflect this
+                }
+            })
+            .catch(error => {
+                console.error("Error updating cart:", error);
+                alert('Error updating cart. Please try again.');
+            });
+        }
+
+        function clearCart() {
+            fetch('/clear-cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Clear the cart items from the DOM
+                    const cartItemsElement = document.getElementById('cart-items');
+                    if (cartItemsElement) {
+                        cartItemsElement.innerHTML = '';  // Remove all child elements
+                    }
+
+                    // Update the total items and total amount to 0
+                    document.getElementById('total-items').textContent = 0;
+                    document.getElementById('total-price').textContent = '0.00';
+
+                    // Hide the checkout button
+                    toggleCheckoutButton();
+                }
+            })
+            .catch(error => {
+                console.error("Error clearing cart:", error);
+            });
+        }
+
+        document.getElementById("location-btn").addEventListener("click", function () {
+            let locationText = document.getElementById("location-text");
+            locationText.innerText = "Fetching location...";
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        let lat = position.coords.latitude;
+                        let lon = position.coords.longitude;
+
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                let addressParts = data.display_name.split(", ");
+                                let addressLength = addressParts.length;
+
+                                if (addressLength >= 4) {
+                                    // Get the 4th last and 3rd last parts of the address
+                                    let formattedAddress = `${addressParts[addressLength - 4]}, ${addressParts[addressLength - 3]}`;
+                                    locationText.innerText = formattedAddress;
+                                } else {
+                                    locationText.innerText = data.display_name; // Fallback to full address if too short
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching address:", error);
+                                locationText.innerText = "Error fetching location";
+                            });
+                    },
+                    function (error) {
+                        locationText.innerText = "Location error";
+                        console.error("Error:", error);
+                    }
+                );
+            } else {
+                locationText.innerText = "Geolocation not supported";
+            }
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
