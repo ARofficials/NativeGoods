@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Category Products</title>
+
+    
+    <script src="https://unpkg.com/lucide@0.485.0/dist/umd/lucide.min.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f7;
+        padding: 2rem;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto 2rem;
+        padding: 0 1rem;
+      }
+
+      #categoryTitle {
+        font-size: 2.5rem;
+        color: #1d1d1f;
+        font-weight: 600;
+      }
+      .filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 1rem;
+        color: #1d1d1f;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.2s;
+      }
+
+      .filter-toggle:hover {
+        background-color: #f5f5f7;
+      }
+
+      .filters-container {
+        max-width: 1400px;
+        margin: 0 auto 2rem;
+        padding: 0 1rem;
+        display: none;
+        transition: all 0.3s ease;
+      }
+
+      .filters-container.show {
+        display: block;
+      }
+
+      .filters-panel {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .filters-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1d1d1f;
+        margin-bottom: 1.5rem;
+      }
+
+      .range-container {
+        margin-bottom: 1rem;
+        padding: 0 10px;
+      }
+
+      .price-range {
+        width: 100%;
+        height: 2px;
+        background: #e5e5e7;
+        border-radius: 5px;
+        outline: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+      }
+
+      .price-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 24px;
+        height: 24px;
+        background: #ffffff;
+        border: 2px solid #1d1d1f;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .price-range::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+        background: #1d1d1f;
+        border-color: #1d1d1f;
+      }
+
+      .price-range::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        background: #ffffff;
+        border: 2px solid #1d1d1f;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .price-range::-moz-range-thumb:hover {
+        transform: scale(1.1);
+        background: #1d1d1f;
+        border-color: #1d1d1f;
+      }
+
+      .range-values {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+        position: relative;
+        padding: 0 12px;
+      }
+
+      .price-point {
+        position: absolute;
+        transform: translateX(-50%);
+        color: #6e6e73;
+        font-size: 0.875rem;
+        text-align: center;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .price-point::before {
+        content: '';
+        position: absolute;
+        top: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 12px;
+        background: #e5e5e7;
+        transition: background 0.2s ease;
+      }
+
+      .price-point:hover {
+        color: #1d1d1f;
+      }
+
+      .price-point:hover::before {
+        background: #1d1d1f;
+      }
+
+      .price-point.active {
+        color: #1d1d1f;
+        font-weight: 600;
+      }
+
+      .price-point.active::before {
+        background: #1d1d1f;
+      }
+
+      #productGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .product-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        isolation: isolate;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-image {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .product-card:hover .product-image {
+        transform: scale(1.05);
+      }
+
+      .product-info {
+        padding: 1.5rem;
+        background: white;
+      }
+
+      .product-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1d1d1f;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .product-company {
+        font-size: 0.9rem;
+        color: #6e6e73;
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+      }
+
+      .product-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e5e7;
+      }
+
+      .product-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1d1d1f;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        #categoryTitle {
+          font-size: 2rem;
+          margin-bottom: 1.5rem;
+        }
+
+        #productGrid {
+          gap: 1rem;
+        }
+
+        .product-card {
+          border-radius: 0.75rem;
+        }
+
+        .product-image {
+          height: 180px;
+        }
+
+        .product-info {
+          padding: 1rem;
+        }
+
+        .product-name {
+          font-size: 1.1rem;
+        }
+
+        .product-price {
+          font-size: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h2 id="categoryTitle">{{ category_name }} Products</h2>
+      <button class="filter-toggle" onclick="toggleFilters()">
+        <i data-lucide="sliders"></i>
+        <span>Price Filter</span>
+      </button>
+    </div>
+    <br>
+
+    <div class="filters-container" id="filtersContainer">
+      <div class="filters-panel">
+        <h3 class="filters-title">Price Range</h3>
+        <div class="range-container">
+          <input
+            type="range"
+            id="priceRange"
+            class="price-range"
+            min="0"
+            max="1000"
+            value="0"
+            step="100"
+          />
+          <div class="range-values" id="pricePoints">
+            <span class="price-point active" style="left: 0%" data-value="0">All</span>
+            <span class="price-point" style="left: 10%" data-value="100">₹100+</span>
+            <span class="price-point" style="left: 20%" data-value="200">₹200+</span>
+            <span class="price-point" style="left: 30%" data-value="300">₹300+</span>
+            <span class="price-point" style="left: 40%" data-value="400">₹400+</span>
+            <span class="price-point" style="left: 50%" data-value="500">₹500+</span>
+            <span class="price-point" style="left: 60%" data-value="600">₹600+</span>
+            <span class="price-point" style="left: 70%" data-value="700">₹700+</span>
+            <span class="price-point" style="left: 80%" data-value="800">₹800+</span>
+            <span class="price-point" style="left: 90%" data-value="900">₹900+</span>
+            <span class="price-point" style="left: 100%" data-value="1000">₹1000+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div id="productGrid">
+      {% for product in products %}
+      <div class="product-card" data-price="{{ product.pprice }}">
+        <a href="{% url 'product_detail' product.id %}">
+          <img
+              src="{{ product.image.url }}"
+              alt="{{ product.pname }}"
+              class="product-image"
+          />
+      </a>
+      
+        <div class="product-info">
+          <h3 class="product-name">{{ product.pname }}</h3>
+          <p class="product-company">{{ product.cmp_name }}</p>
+          <div class="product-footer">
+            <span class="product-price">₹{{ product.pprice }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Toggle filters panel
+      function toggleFilters() {
+        const filtersContainer = document.getElementById('filtersContainer');
+        filtersContainer.classList.toggle('show');
+      }
+
+      // Filter products based on price range
+      function filterProducts(minPrice) {
+        const productCards = document.querySelectorAll('.product-card');
+        const productGrid = document.getElementById('productGrid');
+        let visibleProducts = 0;
+
+        productCards.forEach(card => {
+          const productPrice = parseInt(card.dataset.price);
+          if (minPrice === 0 || productPrice >= minPrice) {
+            card.style.display = 'block';
+            visibleProducts++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update price points styling
+        document.querySelectorAll('.price-point').forEach(point => {
+          point.classList.toggle('active', 
+            parseInt(point.dataset.value) === minPrice
+          );
+        });
+
+        // Show "No products" message if needed
+        const existingMessage = document.querySelector('.no-products');
+        if (visibleProducts === 0) {
+          if (!existingMessage) {
+            const noProducts = document.createElement('div');
+            noProducts.className = 'no-products';
+            noProducts.textContent = 'No products found in this price range.';
+            productGrid.appendChild(noProducts);
+          }
+        } else if (existingMessage) {
+          existingMessage.remove();
+        }
+      }
+
+      // Initialize price range slider and points
+      const priceRange = document.getElementById('priceRange');
+      const pricePoints = document.querySelectorAll('.price-point');
+
+      priceRange.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        filterProducts(value);
+      });
+
+      // Make price points clickable
+      pricePoints.forEach(point => {
+        point.addEventListener('click', () => {
+          const value = parseInt(point.dataset.value);
+          priceRange.value = value;
+          filterProducts(value);
+        });
+      });
+    </script>
+  </body>
+</html>

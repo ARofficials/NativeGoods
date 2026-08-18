@@ -1,0 +1,219 @@
+/* Base Styles */
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--color-gray-900);
+  line-height: 1.5;
+  background-color: var(--color-white);
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+
+
+/* Main Content */
+.main-content {
+  padding: 3rem 0;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.page-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+}
+
+.page-header p {
+  font-size: 1.125rem;
+  color: var(--color-gray-600);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+/* Contact Grid */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+/* Contact Info */
+.contact-info {
+  background-color: var(--color-gray-50);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.contact-info h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 1.5rem;
+}
+
+.info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+}
+
+.info-icon {
+  flex-shrink: 0;
+  color: var(--color-black);
+}
+
+.info-content {
+  margin-left: 1rem;
+}
+
+.info-content h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-gray-900);
+}
+
+.info-content p {
+  margin-top: 0.25rem;
+  color: var(--color-gray-600);
+}
+
+.info-note {
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+  margin-top: 0.25rem;
+}
+
+.social-links {
+  margin-top: 2.5rem;
+}
+
+.social-links h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-black);
+}
+
+.social-icon:hover {
+  color: var(--color-gray-700);
+}
+
+.contact-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px; /* Adjust size as needed */
+  height: 60px;
+  background-color: #D14836; /* Gmail Red */
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.icon {
+  width: 30px; /* Adjust icon size */
+  height: 30px;
+}
+
+.contact-button:hover {
+  background-color: #B23121;
+}
+
+/* Map Section */
+.map-section {
+  height: 24rem;
+  margin-bottom: 4rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--color-gray-200);
+}
+
+
+
+
+@media (min-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+  
+  .page-header h1 {
+    font-size: 2.5rem;
+  }
+}

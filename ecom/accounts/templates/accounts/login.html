@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce Login</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+  <!-- Add an if block to check if messages exist -->
+  {% if messages %}
+    <div class="popup-messages">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+          <button class="close" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+    
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm" method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+      <a style="color:black;" href="{% url 'password_reset' %}"><p>Forgot Password?</p></a>
+      <button type="submit" class="login-button">Login</button>
+    </form>
+
+    <p>Don't have an account?</p>
+
+    <div class="signup">
+      <button id="SignUpButton" class="login-button" onclick=window.location.href="{% url 'signup' %}">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- <script defer type="module" src="{% static 'accounts/script.js' %}"></script> -->
+</body>
+</html>

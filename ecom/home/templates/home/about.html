@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Native Goods</title>
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'home/about.css' %}">
+  <!-- <link rel="stylesheet" href="about.css"> -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+</head>
+<body>
+ 
+     
+      <button class="mobile-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  
+
+  <section class="mission">
+    <div class="container">
+      <div class="mission-content">
+        <div class="mission-image">
+          <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Local business owner">
+        </div>
+        <div class="mission-text">
+          <h2>Our Mission</h2>
+          <p>At Native Goods, we believe in the power of local commerce. Our mission is to create a digital marketplace that connects talented artisans and small business owners with customers who value unique, handcrafted products.</p>
+          <p>We're committed to breaking down the barriers that prevent local sellers from reaching wider audiences, providing them with the tools they need to succeed in today's digital economy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="values">
+    <div class="container">
+      <h2>Our Core Values</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon" id="accessibility-icon"></div>
+          <h3>Accessibility</h3>
+          <p>We make e-commerce accessible to all sellers, regardless of technical expertise or financial resources.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" id="community-icon"></div>
+          <h3>Community</h3>
+          <p>We foster connections between local sellers and buyers, strengthening community bonds.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" id="sustainability-icon"></div>
+          <h3>Sustainability</h3>
+          <p>We promote sustainable shopping practices by supporting local businesses and reducing shipping distances.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" id="empowerment-icon"></div>
+          <h3>Empowerment</h3>
+          <p>We empower small businesses with the tools they need to compete in the digital marketplace.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  <section class="team">
+    <div class="container">
+      <h2>Meet Our Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-image">
+            <img src="{% static 'home/images/aswin.jpg' %}" alt="Team member">
+          </div>
+          <h3>ASWINKESH A</h3>
+          <p>FRONTEND DEVELOPER</p>
+        </div>
+        <div class="team-member">
+          <div class="member-image">
+            <img src="{% static 'home/images/emil.jpg' %}" alt="Team member">
+          </div>
+          <h3>EMIL BAIJU</h3>
+          <p>FRONTEND DEVELOPER</p>
+        </div>
+        
+        <div class="team-member">
+            <div class="member-image">
+              <img src="{% static 'home/images/gino.jpg' %}" alt="Team member">
+            </div>
+            <h3>GINO JAMES</h3>
+            <p>FRONTEND DEVELOPER</p>
+          </div>
+          <div class="team-member">
+            <div class="member-image">
+              <img src="{% static 'home/images/jacob.jpg' %}" alt="Team member">
+            </div>
+            <h3>JACOB SAM JOSE</h3>
+            <p>BACKEND DEVELOPER</p>
+          </div>
+        <div class="team-member">
+          <div class="member-image">
+            <img src="{% static 'home/images/albin.jpg' %}" alt="Team member">
+          </div>
+          <h3>ALBIN RAJESH </h3>
+          <p>BACKEND DEVELOPER</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="join-us">
+    <div class="container">
+      <div class="join-content">
+        <h2>Join the Native Goods Community</h2>
+        <p>Whether you're a local artisan looking to expand your reach or a customer seeking unique, handcrafted products, Native Goods is the place for you.</p>
+        <div class="cta-buttons">
+          <a href="{% if user.is_authenticated %}{% url 'add_product' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary">Become a Seller</a>
+          <a href="{% url 'home' %}" class="btn btn-secondary">Explore Marketplace</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="{% static 'about/script.js' %}"></script>
+</body>
+</html>

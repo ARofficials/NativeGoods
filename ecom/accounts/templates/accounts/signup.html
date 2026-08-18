@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce Signup</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+  <style>
+    .error-message {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .input-error {
+      border-color: #dc3545 !important;
+    }
+    .input-success {
+      border-color: #28a745 !important;
+    }
+  </style>
+</head>
+<body>
+  {% if form.errors %}
+    <div class="popup-messages">
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          <div class="alert alert-error">
+            {{ field|title }}: {{ error }}
+            <button class="close" onclick="this.parentElement.style.display='none';">&times;</button>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  {% endif %}
+    
+  <div class="login-container">
+    <h1>Sign Up</h1>
+    <form id="signupForm" action="{% url 'signup' %}" method="POST">
+      {% csrf_token %}
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        <div id="usernameError" class="error-message"></div>
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <div id="emailError" class="error-message"></div>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password1" placeholder="Enter your password" required>
+        <div id="passwordError" class="error-message"></div>
+      </div>
+      <div class="input-group">
+        <label for="cpassword">Confirm Password</label>
+        <input type="password" id="cpassword" name="password2" placeholder="Enter your confirmation password" required>
+        <div id="cpasswordError" class="error-message"></div>
+      </div>
+      <button type="submit" class="login-button">Sign up</button>
+    </form>
+    <p>Already have an account?</p>
+    <div class="signup">
+      <button id="SignUpButton" class="login-button" onclick=window.location.href="{% url 'login' %}">Log-in</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('signupForm');
+      const usernameInput = document.getElementById('username');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const cpasswordInput = document.getElementById('cpassword');
+      
+      // Real-time validation
+      usernameInput.addEventListener('input', validateUsername);
+      emailInput.addEventListener('input', validateEmail);
+      passwordInput.addEventListener('input', validatePassword);
+      cpasswordInput.addEventListener('input', validateConfirmPassword);
+      
+      // Form submission validation
+      form.addEventListener('submit', function(e) {
+        if (!validateForm()) {
+          e.preventDefault();
+        }
+      });
+      
+      function validateUsername() {
+        const username = usernameInput.value.trim();
+        const usernameError = document.getElementById('usernameError');
+        const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_-]{3,29}$/;
+        
+        if (username.length === 0) {
+          showError(usernameInput, usernameError, 'Username is required');
+          return false;
+        }
+        
+        if (/^[0-9]/.test(username)) {
+          showError(usernameInput, usernameError, 'Username cannot start with a number');
+          return false;
+        }
+        
+        if (!usernameRegex.test(username)) {
+          showError(usernameInput, usernameError, 
+            'Username must start with a letter and contain only letters, numbers, underscores or hyphens (4-30 chars)');
+          return false;
+        }
+        
+        showSuccess(usernameInput, usernameError);
+        return true;
+      }
+      
+      function validateEmail() {
+        const email = emailInput.value.trim();
+        const emailError = document.getElementById('emailError');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (email.length === 0) {
+          showError(emailInput, emailError, 'Email is required');
+          return false;
+        }
+        
+        if (!emailRegex.test(email)) {
+          showError(emailInput, emailError, 'Please enter a valid email address');
+          return false;
+        }
+        
+        showSuccess(emailInput, emailError);
+        return true;
+      }
+      
+      function validatePassword() {
+        const password = passwordInput.value;
+        const passwordError = document.getElementById('passwordError');
+        
+        if (password.length === 0) {
+          showError(passwordInput, passwordError, 'Password is required');
+          return false;
+        }
+        
+        if (password.length < 8) {
+          showError(passwordInput, passwordError, 'Password must be at least 8 characters');
+          return false;
+        }
+        
+        showSuccess(passwordInput, passwordError);
+        return true;
+      }
+      
+      function validateConfirmPassword() {
+        const password = passwordInput.value;
+        const cpassword = cpasswordInput.value;
+        const cpasswordError = document.getElementById('cpasswordError');
+        
+        if (cpassword.length === 0) {
+          showError(cpasswordInput, cpasswordError, 'Please confirm your password');
+          return false;
+        }
+        
+        if (password !== cpassword) {
+          showError(cpasswordInput, cpasswordError, 'Passwords do not match');
+          return false;
+        }
+        
+        showSuccess(cpasswordInput, cpasswordError);
+        return true;
+      }
+      
+      function validateForm() {
+        const isUsernameValid = validateUsername();
+        const isEmailValid = validateEmail();
+        const isPasswordValid = validatePassword();
+        const isConfirmPasswordValid = validateConfirmPassword();
+        
+        return isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
+      }
+      
+      function showError(input, errorElement, message) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        input.classList.add('input-error');
+        input.classList.remove('input-success');
+      }
+      
+      function showSuccess(input, errorElement) {
+        errorElement.style.display = 'none';
+        input.classList.remove('input-error');
+        input.classList.add('input-success');
+      }
+    });
+  </script>
+</body>
+</html>

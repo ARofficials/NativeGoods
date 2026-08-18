@@ -1,0 +1,185 @@
+/* styles.css */
+
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  background: rgb(0, 0, 0);
+  /* background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,170,233,1) 100%); */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Login container */
+.login-container {
+  background: rgb(255, 255, 255);
+  border-radius: 15px;
+  width: 300px;
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(35px); /* Apply blur effect to the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+}
+
+/* Input group */
+.input-group {
+  margin-right: 26px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ff7e5f;
+  box-shadow: 0 0 5px rgba(255, 126, 95, 0.5);
+}
+
+/* Login button */
+.login-button {
+  width: 80%;
+  padding: 0.8rem;
+  background-color: #329000;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 15.4px;
+}
+
+.login-button:hover {
+  background-color: #0c6700;
+}
+
+/* Google Sign-In button container */
+.signup {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#SignUpButton {
+  width: 80%;
+  padding: 0.8rem;
+  background-color: #e20000;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 15.4px;
+}
+
+#SignUpButton:hover {
+  background-color: #7d0000;
+}
+
+/* Pop-up error message container */
+.popup-messages {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 100%;
+  max-width: 400px; /* Adjust the width as needed */
+  text-align: center;
+}
+
+/* General pop-up error message styling */
+.popup-messages .alert {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px); /* Adds a blur effect to the background */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  opacity: 0.95;
+}
+
+/* Specific styles for different types of pop-up error messages */
+.popup-messages .alert-error {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.9), rgba(255, 71, 87, 0.9));
+  color: white;
+}
+
+.popup-messages .alert-success {
+  background: linear-gradient(135deg, rgba(76, 209, 55, 0.9), rgba(68, 189, 50, 0.9));
+  color: white;
+}
+
+.popup-messages .alert-info {
+  background: linear-gradient(135deg, rgba(0, 168, 255, 0.9), rgba(0, 151, 230, 0.9));
+  color: white;
+}
+
+.popup-messages .alert-warning {
+  background: linear-gradient(135deg, rgba(251, 197, 49, 0.9), rgba(225, 177, 44, 0.9));
+  color: white;
+}
+
+/* Close button for pop-up error messages */
+.popup-messages .alert .close {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+  margin-left: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.popup-messages .alert .close:hover {
+  opacity: 0.75;
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  input {
+    font-size: 0.9rem;
+  }
+
+  .login-button {
+    font-size: 0.9rem;
+  }
+}

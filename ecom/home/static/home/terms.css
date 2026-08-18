@@ -1,0 +1,154 @@
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Layout */
+.min-height {
+  min-height: 100vh;
+}
+
+.bg-gray {
+  background-color: #f9fafb;
+}
+
+.bg-gray-light {
+  background-color: #f3f4f6;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Home page */
+.home-card {
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.logo {
+  font-size: 48px;
+  color: #16a34a;
+}
+
+.home-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.home-text {
+  color: #4b5563;
+  margin-bottom: 24px;
+}
+
+.link-container {
+  margin-top: 32px;
+}
+
+.terms-link {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.terms-link:hover {
+  color: #4f46e5;
+}
+
+/* Terms page */
+.terms-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.back-button {
+  margin-bottom: 32px;
+  color: black;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #4f46e5;
+}
+
+.back-icon {
+  margin-right: 8px;
+}
+
+.terms-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+}
+
+.terms-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 24px;
+}
+
+.terms-content {
+  color: #4b5563;
+}
+
+.terms-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.terms-text {
+  margin-bottom: 16px;
+}
+
+.terms-list {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.terms-list-item {
+  margin-bottom: 8px;
+}
+
+.footer-text {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 32px;
+}
